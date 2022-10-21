@@ -1,1 +1,2 @@
+Settings Developer settings Personal access tokens
 git remote set-url origin https://<githubtoken>@github.com/<username>/<repositoryname>.git
