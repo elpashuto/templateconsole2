@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "TemplateConsoleApp": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      },
+      "remoteDebugEnabled": false
+    }
+  }
+}
