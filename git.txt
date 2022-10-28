@@ -1,2 +1,0 @@
-Settings Developer settings Personal access tokens -> CLASSIC
-git remote set-url origin https://<githubtoken>@github.com/<username>/<repositoryname>.git

@@ -5,7 +5,10 @@ docker pull apache/nifi
 -u 0 = as root
 -v mount directory (must be before bash otherwise its arguments for bash)
 -p
-docker run --rm -v D:\Workspace\NiFiDocker\data:/mnt/external -u 0 -p 8443:8443 --interactive --tty --entrypoint /bin/bash apache/nifi
+dont use --rm it delete the container 
+
+[you can use also %cd% but be carefull from running in c:/windows]
+docker run -v D:\Workspace\backup\dockerdata:/mnt/external -u 0 -p 8443:8443 --interactive --tty --entrypoint /bin/bash apache/nifi
 
 
 ================================================
@@ -35,19 +38,24 @@ paste = ESC + :set paste + press i + SHIFT AND right click mouse
 ================================================
 login to running container:
 
-docker ps
+docker ps --all
 
 docker exec -u 0 -it ad790bff7f5d /bin/bash
 
 
 ================================================
-*** there is no reliable way to "save state" of container, if you want more commands you need to edit the dockerfile maybe ***
 
-Create an Image From a Container
-docker ps
+
+Create an Image From a Container, run without --rm
+
+docker ps --all
 docker commit 63ade976e80f apache/nifi:withchanges
 
-+ Using -v to mount all the disk
+and you can just without commit just on local containers to PAUSE
+
+docker stop 05d4fffaf60d
+docker start 05d4fffaf60d
+docker exec -it 05d4fffaf60d /bin/bash
 
 
 ================================================
