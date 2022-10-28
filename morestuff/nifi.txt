@@ -1,0 +1,5 @@
+
+CSVRecordSetWriter
+
+Update Attribute
+    add: filename value: ${filename}.csv
