@@ -1,0 +1,50 @@
+
+
+
+-u 0 = as root
+-v mount directory (must be before bash otherwise its arguments for bash)
+-p
+docker run --rm -v %cd%:/mnt/external -u 0 -p 8443:8443 --interactive --tty --entrypoint /bin/bash apache/nifi
+
+
+================================================
+
+alias ll='ls -l --color=auto'
+apt update -y
+apt install sudo
+sudo apt-get install vim -y
+
+vim:
+
+escape:
+    
+:q! exit without save
+:wq exit and save
+/<bla bla> search
+insert key to write
+
+================================================
+*** there is no reliable way to "save state" of container, if you want more commands you need to edit the dockerfile maybe ***
+
+Create an Image From a Container
+docker ps
+docker commit 63ade976e80f apache/nifi:withchanges
+
+================================================
+login to running container:
+
+docker ps
+
+docker exec -it 63ade976e80f /bin/bash
+
+
+
+================================================
+
+connect from Docker container outside to the 127.0.0.1 of the HOST PC MACHINE
+
+just use this:
+
+host.docker.internal instead of 127.0.0.1
+
+all worked !!!!
