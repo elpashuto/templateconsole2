@@ -2,4 +2,4 @@ Settings Developer settings Personal access tokens -> CLASSIC
 git remote set-url origin https://<githubtoken>@github.com/<username>/<repositoryname>.git
 
 
-git remote set-url origin https://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@github.com/elpashuto/templateconsole2.git
+git remote set-url origin https://xxx@github.com/elpashuto/templateconsole2.git
