@@ -1,0 +1,40 @@
+
+VM Kali (network settings bridged adapter)
+
+make sure you can SSH into the machine
+(the ssh service should be start etc)
+
+
+python3 -m http.server 8888 -bind 127.0.1.100
+
+ssh -ND 0.0.0.0:12345 root@localhost
+
+-N only port fowrding no shell usage here
+-f background
+
+-D 0.0.0.0 = all ips you can verify it by
+netstat -anop | grep 12345
+you can see that it listen on 0.0.0.0:12345 0.0.0.0.:* (no specific connetion its listen)
+after some connection you can see
+
+10.0.0.14:12345 10.0.0.11:51811 ESTABLISHED
+so a connection was made from some machine 10.0.0.11 into my machine as 10.0.0.14
+so you can know also from which net card
+0.0.0.0 is for all netcards
+
+---------------------------------------------------------------------------
+
+
+Windows machine
+
+before using firefox try
+
+curl --socks5 10.0.0.14:12345 www.google.com
+
+in firefox:
+about:config -> network.proxy.allow_hijacking_localhost true
+settings -> dns settings -> manual proxy -> 10.0.0.14 12345 [v] Proxy DNS when using SOCKS v5
+
+so now we can surf to http://127.0.1.100:8888
+(and also copy files etc)
+
