@@ -1,11 +1,34 @@
 
+systemctl enable ssh
+service ssh start
+mousepad /etc/ssh/sshd_config
+    -> PermitRootLogin, PasswordAuthoentication, GatewayPorts, AllowTcpForwarding, AllowAgentForwarding
+
+
+10.0.0.12
+python -m http.server 1616
+
+10.0.0.10
+ssh -ND 0.0.0.0:12345 root@localhost
+
+10.0.0.14
+ssh -NL 0.0.0.0:7777:10.0.0.10:12345 root@localhost
+
+10.0.0.11 (windows)
+curl --socks5 10.0.0.14:7777 http://10.0.0.12:1616
+    
+        -> getting request from the final chain as my ip = 10.0.0.10 :]
+
+        
+-------------------------------------------------
+
 VM Kali (network settings bridged adapter)
 
 make sure you can SSH into the machine
 (the ssh service should be start etc)
 
 
-python3 -m http.server 8888 -bind 127.0.1.100
+python3 -m http.server 8888 --bind 127.0.1.100
 
 OR (nc -l -p 12345 -v -n ### nc x.x.x.x 12345)
 
