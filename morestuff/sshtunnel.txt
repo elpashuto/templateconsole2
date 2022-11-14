@@ -1,4 +1,7 @@
 
+get curl on windows machine... and whats ssh -R ?
+
+
 systemctl enable ssh
 service ssh start
 mousepad /etc/ssh/sshd_config
