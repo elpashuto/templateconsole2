@@ -5,8 +5,8 @@ Test -3
 so we learned we can run a "backdoor" on the vps so lets do a tunnel into a VPS, install a backdoor 
 from VPS back to the final destination and back to us
 
-VM 1 = 
-    ssh -R 0.0.0.0:7777:0.0.0.0:5555 -p 1212 root@10.0.0.12
+VM 1 = 10.0.0.17
+    ssh -p 1212 -R 0.0.0.0:7777:0.0.0.0:5555 root@10.0.0.12
     ncat -l -k -p 5555
 
 VM 2 = 10.0.0.12
