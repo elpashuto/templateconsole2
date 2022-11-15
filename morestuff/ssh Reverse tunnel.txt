@@ -25,7 +25,7 @@ from VPS back to the final destination and back to us
     -> do nothing
     
 5. Windows   = 10.0.0.11
-    curl --socks5 10.0.0.12:1213 http://10.0.0.14 => will get an ip of 10.0.0.12
+    curl --socks5 10.0.0.12:1213 http://10.0.0.14:801 => will get an ip of 10.0.0.10
     ncat 10.0.0.14 7777 => send somthing
     
     
