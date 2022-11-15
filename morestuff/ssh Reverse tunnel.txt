@@ -5,21 +5,28 @@ Test -3
 so we learned we can run a "backdoor" on the vps so lets do a tunnel into a VPS, install a backdoor 
 from VPS back to the final destination and back to us
 
-VM 1 = 10.0.0.17
-    ssh -p 1212 -R 0.0.0.0:7777:0.0.0.0:5555 root@10.0.0.12
-    ncat -l -k -p 5555
 
-VM 2 = 10.0.0.12
+1. VM 2 = 10.0.0.12
     ssh -NL 0.0.0.0:1212:10.0.0.10:2323 root@localhost
+    ssh -NL 0.0.0.0:1213:10.0.0.10:2324 root@localhost
 
-VM 3 = 10.0.0.10
+2. VM 3 = 10.0.0.10
     ssh -NL 0.0.0.0:2323:10.0.0.14:22 root@localhost
+    ssh -ND 0.0.0.0:2324 root@localhost
 
-VM 4    = 10.0.0.14
+    
+3. VM 1 = 10.0.0.17
+    ssh -p 1212 -R 0.0.0.0:7777:0.0.0.0:5555 root@10.0.0.12
+    ncat -l -k -p 5555 => wait to get data that was sent to 10.0.0.14:5555
+
+
+4. VM 4    = 10.0.0.14
+    python -m http.server 801
     -> do nothing
     
-Windows   = 10.0.0.11
-    ncat 10.0.0.14 7777
+5. Windows   = 10.0.0.11
+    curl --socks5 10.0.0.12:1213 http://10.0.0.14 => will get an ip of 10.0.0.12
+    ncat 10.0.0.14 7777 => send somthing
     
 
 
