@@ -1,0 +1,44 @@
+docker build -t gopher:latest .
+
+[REMOVE CONTAINERS]
+docker ps -all
+
+docker stop ....
+docker rm ....
+docker container prune
+
+[REMOVE IMAGES]
+docker images
+docker image rm ...
+
+docker images prune
+
+=========================================
+
+[CREATE CONTAINERS]
+
+docker run --rm -d -p 801:801 gopher:latest
+
+(--rm = auto remove after it stops)
+(-d sends it to background -> much more recomended than console, you can see logs connect to the machine or in docker desktop)
+
+docker run -it gopher:latest /bin/bash
+
+(if you -d and -it it will never stop because you sent it to background a running shell)
+
+docker run -d -it gopher:latest /bin/bash
+
+[ENTER RUNNING CONTAINER]
+
+docker exec -it bf873acfea25 /bin/bash
+
+
+[Dockers can speak between them]
+
+docker inspect 1c1fb2c4249b | findstr IPAd
+
+
+
+
+
+
