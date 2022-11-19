@@ -11,6 +11,8 @@ RUN apt install -y dos2unix
 RUN apt install -y vim
 RUN apt install -y net-tools
 
+RUN alias cls=clear
+
 #RUN apt install -y golang-go
 
 ENV APP_PATH=/use/src/gopher
