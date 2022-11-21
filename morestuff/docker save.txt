@@ -1,0 +1,13 @@
+
+https://pureinfotech.com/install-windows-subsystem-linux-2-windows-10/#:~:text=To%20install%20WSL2%20on%20Windows,%E2%80%9Cwsl%20%E2%80%93update%E2%80%9D%20command.
+
+https://www.guru99.com/c-gcc-install.html
+
+#for not running docker, use save:
+docker save <dockernameortag> | gzip > mycontainer.tgz
+
+#for running or paused docker, use export:
+docker export <dockernameortag> | gzip > mycontainer.tgz
+
+#load
+gunzip -c mycontainer.tgz | docker load
